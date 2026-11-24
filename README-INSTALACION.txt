@@ -6,6 +6,7 @@ ARCHIVOS
 index.html             Página principal.
 styles.css             Diseño adaptable a PC, tablet y celular.
 app.js                 Inscripciones, panel staff, CRUD y sincronización.
+extended.js            Registro de equipos, rosters, actividades y ranking.
 config.js              URL y clave pública de Supabase.
 supabase-schema.sql    Tablas, roles, políticas RLS, cupos y funciones seguras.
 
@@ -58,7 +59,7 @@ PASO 4 — AÑADIR STAFF
 
 PASO 5 — PUBLICAR EN GITHUB PAGES
 ---------------------------------
-1. Sube index.html, styles.css, app.js y config.js a la raíz del repositorio.
+1. Sube index.html, styles.css, app.js, extended.js y config.js a la raíz del repositorio.
 2. En GitHub abre Settings > Pages.
 3. En Build and deployment selecciona Deploy from a branch.
 4. Selecciona la rama main y la carpeta /(root). Guarda.
@@ -100,3 +101,30 @@ Esta es la base funcional de la plataforma, pero queda pendiente conectar el
 proyecto real de Supabase (URL/anon key) y crear/promover la primera cuenta admin.
 Sin esos dos pasos no pueden funcionar las inscripciones compartidas, el login
 ni la sincronización. No hay credenciales ni contraseñas incrustadas en el código.
+
+
+NUEVO EN LA VERSIÓN 2
+---------------------
+- Registro de organizaciones sin un límite fijo de cantidad de equipos.
+- Ficha de equipo con logo PNG/JPG, nombre, TAG, manager y país.
+- Roster de 6 titulares y un séptimo jugador opcional.
+- Cada jugador registra edad, país, nick, ID de Free Fire, captura de cuenta
+  y fotografía personal.
+- Las fotos personales y capturas se guardan en dos buckets separados: uno público para logos/portadas y otro privado para fotos personales/comprobantes; solo staff
+  puede leer esos archivos. El directorio público muestra logo y datos básicos.
+- Actividades de tipo RELÁMPAGO, TORNEO y ENTRENO con fecha, inscripción,
+  pozo de premios, instrucciones de pago en texto libre, link/grupo, número
+  de salas, imagen y descripción.
+- Solicitudes de actividad vinculadas a equipos aprobados y validación de pago
+  desde el panel.
+- Ranking acumulado con puntos de posición + kills + Booyah.
+- Roles ampliados: ADMIN, STAFF, CREADOR, VIP y EQUIPO. La matriz fina de
+  permisos debe asignarse según funciones antes de dar acceso a cuentas reales.
+
+IMPORTANTE SOBRE FOTOS Y PAGOS
+------------------------------
+No publiques fotos personales ni capturas de cuentas de menores en el directorio
+público. Esta versión las mantiene privadas para revisión del staff. El formulario
+de actividad permite guardar una URL de comprobante en la solicitud; para pagos
+reales se recomienda integrar un proveedor de pago seguro. No almacenes datos
+de tarjetas ni contraseñas en formularios.
